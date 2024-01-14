@@ -5,7 +5,7 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import 'leaflet/dist/leaflet.css';
 
-export default function InteractiveMap() {
+export default function CustomMap() {
 	const position = [51.505, -0.09] as LatLngExpression;
 	const customIcon = new Icon({
 		// iconUrl: require('../assets/marker-icon.png'),

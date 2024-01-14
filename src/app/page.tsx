@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 
-const InteractiveMap = dynamic(() => import('@/components/InteractiveMap'), {
+const CustomMap = dynamic(() => import('@/components/CustomMap'), {
 	ssr: false,
 });
 
 export default function Home() {
 	return (
 		<main>
-			<InteractiveMap />
+			<CustomMap />
 		</main>
 	);
 }

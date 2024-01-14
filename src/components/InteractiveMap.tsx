@@ -1,6 +1,7 @@
 'use client';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { Icon, LatLngExpression } from 'leaflet';
+import { DivIcon, Icon, LatLngExpression, divIcon, point } from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -29,6 +30,13 @@ export default function InteractiveMap() {
 			popup: 'marker 3',
 		},
 	];
+	const createClusterCustomIcon = (cluster: any) => {
+		return new DivIcon({
+			html: `<div>${cluster.getChildCount()}</div>`,
+			iconSize: [33, 33],
+			className: 'custom-cluster',
+		});
+	};
 
 	return (
 		<MapContainer center={position} zoom={13}>
@@ -36,11 +44,16 @@ export default function InteractiveMap() {
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 			/>
-			{markers.map(marker => (
-				<Marker key={'marker'} position={marker.position} icon={marker.icon}>
-					<Popup>{marker.popup}</Popup>
-				</Marker>
-			))}
+			<MarkerClusterGroup
+				chunkedLoading
+				iconCreateFunction={createClusterCustomIcon}
+			>
+				{markers.map(marker => (
+					<Marker key={'marker'} position={marker.position} icon={marker.icon}>
+						<Popup>{marker.popup}</Popup>
+					</Marker>
+				))}
+			</MarkerClusterGroup>
 		</MapContainer>
 	);
 }

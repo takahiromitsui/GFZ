@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import { Station, columns } from './columns';
 import { DataTable } from '@/components/data-table';
+import { Component } from 'lucide-react';
 
 const CustomMap = dynamic(() => import('@/components/custom-map'), {
 	ssr: false,
@@ -41,14 +42,23 @@ async function getStations(): Promise<Station[]> {
 
 export default async function Home() {
 	return (
-		<main>
-			{/* <CustomMap /> */}
-			<section className='py-24'>
-				<div className='container'>
-					<h1 className='text-3xl font-bold'> All stations</h1>
-					<DataTable columns={columns} data={await getStations()} />
+		<main className='flex mx-auto max-w-screen-lg'>
+			<div className='flex-none'>
+				{/* Station Control Component */}
+				{/* <StationControl /> */}
+				Station Control
+			</div>
+			<div className='flex-1 flex flex-col'>
+				{/* CustomMap Component */}
+				<div className='mb-4'>
+					<CustomMap />
 				</div>
-			</section>
+				{/* DataTable Component */}
+				<section>
+					<h1 className='text-3xl font-bold mb-4'> All stations</h1>
+					<DataTable columns={columns} data={await getStations()} />
+				</section>
+			</div>
 		</main>
 	);
 }

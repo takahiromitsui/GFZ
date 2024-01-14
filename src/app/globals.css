@@ -78,9 +78,6 @@
 :root {
 	height: 100vh;
 }
-.leaflet-container {
-	height: 100vh;
-}
 
 .custom-cluster {
 	height: 3rem;

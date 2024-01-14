@@ -24,7 +24,7 @@ export default async function StationControl({
 			<h1 className='text-3xl font-bold mb-4'> Station Information</h1>
 			<h1 className='text-3xl font-bold mb-4'> Network Code:</h1>
 			<Select>
-				<SelectTrigger >
+				<SelectTrigger className='w-[300px]'>
 					<SelectValue placeholder='All Networks' />
 				</SelectTrigger>
 				<SelectContent>
@@ -34,7 +34,11 @@ export default async function StationControl({
 							const startYear = new Date(item.startTime).getFullYear();
 							const formattedString = `${item.network} (${startYear}) - ${item.description}`;
 							return (
-								<SelectItem key={item.network} value={item.network}>
+								<SelectItem
+									key={item.network}
+									value={item.network}
+									// className='w-[300px] overflow-ellipsis whitespace-nowrap'
+								>
 									{formattedString}
 								</SelectItem>
 							);

@@ -72,7 +72,7 @@ export default async function Home() {
 				<StationControl props={await getNetworks()} />
 				Station Control
 			</div>
-			<div className='flex-1 flex flex-col'>
+			<div className='flex-1 flex flex-col ml-3'>
 				{/* CustomMap Component */}
 				<div className='mb-4'>
 					<CustomMap />

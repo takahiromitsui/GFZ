@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 import { Station, columns } from './columns';
-import { DataTable } from '@/components/DataTable';
+import { DataTable } from '@/components/data-table';
 
-const CustomMap = dynamic(() => import('@/components/CustomMap'), {
+const CustomMap = dynamic(() => import('@/components/custom-map'), {
 	ssr: false,
 });
 // e.g., https://geofon.gfz-potsdam.de/fdsnws/station/1/query?format=text&network=CX&level=station

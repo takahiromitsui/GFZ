@@ -6,7 +6,7 @@ import MarkerClusterGroup from 'react-leaflet-cluster';
 import 'leaflet/dist/leaflet.css';
 
 export default function CustomMap() {
-	const position = [51.505, -0.09] as LatLngExpression;
+	const position = [0, 0] as LatLngExpression;
 	const customIcon = new Icon({
 		// iconUrl: require('../assets/marker-icon.png'),
 		iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149060.png',
@@ -42,7 +42,7 @@ export default function CustomMap() {
 		<MapContainer center={position} zoom={13}>
 			<TileLayer
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-				url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+				url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
 			/>
 			<MarkerClusterGroup
 				chunkedLoading

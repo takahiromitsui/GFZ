@@ -45,6 +45,7 @@ export default function CustomMap() {
 			style={{
 				height: '400px',
 				width: '100%',
+				zIndex: 0,
 			}}
 		>
 			<TileLayer

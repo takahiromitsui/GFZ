@@ -13,7 +13,8 @@ async function getStations(): Promise<Station[]> {
 	const text = await res.text();
 	const lines = text.split('\n');
 	const stations: Station[] = [];
-	for (const line of lines) {
+	// skip first and last line
+	for (const line of lines.slice(1, -1)) {
 		const [
 			network,
 			station,

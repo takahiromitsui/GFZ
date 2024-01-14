@@ -1,4 +1,6 @@
 'use client';
+import { format } from 'date-fns';
+import { enGB } from 'date-fns/locale';
 
 import { ColumnDef } from '@tanstack/react-table';
 //#Network|Station|Latitude|Longitude|Elevation|SiteName|StartTime|EndTime
@@ -41,9 +43,20 @@ export const columns: ColumnDef<Station>[] = [
 	{
 		accessorKey: 'startTime',
 		header: 'Start Time',
+		cell:({row}) => {
+			const date = new Date(row.getValue('startTime'));
+			const formattedDate = format(date, 'dd/MM/yyyy', { locale: enGB });
+			return <div className='font-medium'>{formattedDate}</div>
+		}
 	},
 	{
 		accessorKey: 'endTime',
 		header: 'End Time',
+		// cell:({row}) => {
+		// 	const date = new Date(row.getValue('endTime'));
+			
+		// 	const formattedDate = date.toLocaleDateString();
+		// 	return <div className='font-medium'>{formattedDate}</div>
+		// }
 	},
 ];

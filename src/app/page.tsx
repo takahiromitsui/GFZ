@@ -13,7 +13,6 @@ const CustomMap = dynamic(() => import('@/components/custom-map'), {
 
 export default  function Home() {
 	const {stations} = useContext(NetworkStationContext);
-	console.log(stations);
 	return (
 		<main className='flex mx-auto max-w-screen-lg'>
 			<NetworkStationContextProvider>

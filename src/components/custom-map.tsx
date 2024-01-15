@@ -56,8 +56,12 @@ export default function CustomMap() {
 				chunkedLoading
 				iconCreateFunction={createClusterCustomIcon}
 			>
-				{markers.map(marker => (
-					<Marker key={'marker'} position={marker.position} icon={marker.icon}>
+				{markers.map((marker, index) => (
+					<Marker
+						key={`${marker}-${index}`}
+						position={marker.position}
+						icon={marker.icon}
+					>
 						<Popup>{marker.popup}</Popup>
 					</Marker>
 				))}

@@ -1,51 +1,19 @@
+'use client';
 import dynamic from 'next/dynamic';
-import { Station, columns } from './columns';
+import { columns } from './columns';
 import { DataTable } from '@/components/data-table';
-import { Component, Network } from 'lucide-react';
-import NetworkStationContextProvider from '@/store/network-station-context';
+
+import NetworkStationContextProvider, { NetworkStationContext } from '@/store/network-station-context';
 import StationControl from '@/components/station-control';
+import { useContext } from 'react';
 
 const CustomMap = dynamic(() => import('@/components/custom-map'), {
 	ssr: false,
 });
 
-const BASE_URL = 'https://geofon.gfz-potsdam.de/fdsnws/station/1/query?';
-
-// e.g., https://geofon.gfz-potsdam.de/fdsnws/station/1/query?format=text&network=CX&level=station
-async function getStations(): Promise<Station[]> {
-	const res = await fetch(
-		'https://geofon.gfz-potsdam.de/fdsnws/station/1/query?format=text&network=CX&level=station'
-	);
-	const text = await res.text();
-	const lines = text.split('\n');
-	const stations: Station[] = [];
-	// skip first and last line
-	for (const line of lines.slice(1, -1)) {
-		const [
-			network,
-			station,
-			latitude,
-			longitude,
-			elevation,
-			siteName,
-			startTime,
-			endTime,
-		] = line.split('|');
-		stations.push({
-			network,
-			station,
-			latitude: parseFloat(latitude),
-			longitude: parseFloat(longitude),
-			elevation: parseFloat(elevation),
-			siteName,
-			startTime,
-			endTime,
-		});
-	}
-	return stations;
-}
-
-export default async function Home() {
+export default  function Home() {
+	const {stations} = useContext(NetworkStationContext);
+	console.log(stations);
 	return (
 		<main className='flex mx-auto max-w-screen-lg'>
 			<NetworkStationContextProvider>
@@ -61,7 +29,7 @@ export default async function Home() {
 					{/* DataTable Component */}
 					<section>
 						<h1 className='text-3xl font-bold mb-4'> All stations</h1>
-						<DataTable columns={columns} data={await getStations()} />
+						<DataTable columns={columns} data = {stations}/>
 					</section>
 				</div>
 			</NetworkStationContextProvider>

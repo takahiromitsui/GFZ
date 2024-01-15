@@ -6,20 +6,10 @@ import { ColumnDef } from '@tanstack/react-table';
 import { ArrowUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-// Should be more dynamic
-//#Network|Station|Latitude|Longitude|Elevation|SiteName|StartTime|EndTime
-export type Station = {
-	network: string;
-	station: string;
-	latitude: number;
-	longitude: number;
-	elevation: number;
-	siteName: string;
-	startTime: string;
-	endTime: string;
-};
+import { StationDataType } from '@/api/station';
 
-export const columns: ColumnDef<Station>[] = [
+
+export const columns: ColumnDef<StationDataType>[] = [
 	{
 		id: 'select',
 		header: ({ table }) => (

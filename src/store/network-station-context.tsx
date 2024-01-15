@@ -14,12 +14,16 @@ type NetworkStationContextType = {
 	networks: NetworkDataType[];
 	setCurrentNetwork: (network: NetworkDataType) => void;
 	stations: StationDataType[];
+	selectedStations: StationDataType[];
+	setSelectedStations: (stations: StationDataType[]) => void;
 };
 
 export const NetworkStationContext = createContext({
 	networks: [],
 	setCurrentNetwork: () => {},
 	stations: [],
+	selectedStations: [],
+	setSelectedStations: () => {},
 } as NetworkStationContextType);
 
 export default function NetworkStationContextProvider(props: {
@@ -30,6 +34,9 @@ export default function NetworkStationContextProvider(props: {
 		null
 	);
 	const [stations, setStations] = useState<StationDataType[]>([]);
+	const [selectedStations, setSelectedStations] = useState<StationDataType[]>(
+		[]
+	);
 
 	useEffect(() => {
 		getNetworks().then(networks => setNetworks(networks));
@@ -45,7 +52,13 @@ export default function NetworkStationContextProvider(props: {
 
 	return (
 		<NetworkStationContext.Provider
-			value={{ networks, setCurrentNetwork, stations }}
+			value={{
+				networks,
+				setCurrentNetwork,
+				stations,
+				selectedStations,
+				setSelectedStations,
+			}}
 		>
 			{props.children}
 			<div className='flex-1 flex flex-col ml-3'>

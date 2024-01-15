@@ -1,11 +1,5 @@
-// import dynamic from 'next/dynamic';
 import StationControl from '@/components/station-control';
 import NetworkStationContextProvider from '@/store/network-station-context';
-
-// const CustomMap = dynamic(() => import('@/components/custom-map'), {
-// 	ssr: false,
-// });
-
 export default function Home() {
 	return (
 		<main className='flex mx-auto max-w-screen-lg'>

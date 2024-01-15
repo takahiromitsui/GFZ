@@ -1,3 +1,4 @@
+'use client';
 import {
 	Select,
 	SelectContent,
@@ -7,18 +8,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
+import { NetworkStationContext } from '@/store/network-station-context';
+import { useContext } from 'react';
 
-export type StationControlProps = {
-	network: string;
-	description: string;
-	startTime: string;
-};
-
-export default async function StationControl({
-	props,
-}: {
-	props: StationControlProps[];
-}) {
+export default function StationControl() {
+	const { networks } = useContext(NetworkStationContext);
 	return (
 		<section>
 			<h1 className='text-3xl font-bold mb-4'> Station Information</h1>
@@ -30,7 +24,7 @@ export default async function StationControl({
 				<SelectContent>
 					<SelectGroup>
 						<SelectLabel>Networks</SelectLabel>
-						{props.map(item => {
+						{networks.map(item => {
 							const startYear = new Date(item.startTime).getFullYear();
 							const formattedString = `${item.network} (${startYear}) - ${item.description}`;
 							return (

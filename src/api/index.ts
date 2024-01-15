@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://geofon.gfz-potsdam.de/fdsnws/station/1/query?';

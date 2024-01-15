@@ -4,7 +4,11 @@ import { NetworkDataType, getNetworks } from '@/api/network';
 import { StationDataType, getStations } from '@/api/station';
 import { DataTable } from '@/components/data-table';
 import { columns } from '@/app/columns';
-import CustomMap from '@/components/custom-map';
+import dynamic from 'next/dynamic';
+
+const CustomMap = dynamic(() => import('@/components/custom-map'), {
+	ssr: false,
+});
 
 type NetworkStationContextType = {
 	networks: NetworkDataType[];
@@ -47,7 +51,7 @@ export default function NetworkStationContextProvider(props: {
 			<div className='flex-1 flex flex-col ml-3'>
 				{/* CustomMap Component */}
 				<div className='mb-4 flex-grow'>
-					<CustomMap />
+					<CustomMap markersData={stations} />
 				</div>
 				{/* DataTable Component */}
 				<section>

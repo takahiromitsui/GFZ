@@ -4,32 +4,19 @@ import { DivIcon, Icon, LatLngExpression, divIcon, point } from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import 'leaflet/dist/leaflet.css';
+import { StationDataType } from '@/api/station';
 
-export default function CustomMap() {
+type CustomMapProps = {
+	markersData?: StationDataType[];
+};
+
+export default function CustomMap({ markersData }: CustomMapProps) {
 	const position = [51.505, -0.09] as LatLngExpression;
 	const customIcon = new Icon({
 		// iconUrl: require('../assets/marker-icon.png'),
 		iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149060.png',
 		iconSize: [38, 38],
 	});
-	//Move to a separate component later
-	const markers = [
-		{
-			position: [51.505, -0.09] as LatLngExpression,
-			icon: customIcon,
-			popup: 'marker 1',
-		},
-		{
-			position: [51.51, -0.09] as LatLngExpression,
-			icon: customIcon,
-			popup: 'marker 2',
-		},
-		{
-			position: [51.51, -0.1] as LatLngExpression,
-			icon: customIcon,
-			popup: 'marker 3',
-		},
-	];
 	const createClusterCustomIcon = (cluster: any) => {
 		return new DivIcon({
 			html: `<div>${cluster.getChildCount()}</div>`,
@@ -52,20 +39,33 @@ export default function CustomMap() {
 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
 			/>
-			<MarkerClusterGroup
-				chunkedLoading
-				iconCreateFunction={createClusterCustomIcon}
-			>
-				{markers.map((marker, index) => (
-					<Marker
-						key={`${marker}-${index}`}
-						position={marker.position}
-						icon={marker.icon}
-					>
-						<Popup>{marker.popup}</Popup>
-					</Marker>
-				))}
-			</MarkerClusterGroup>
+			{markersData && (
+				<MarkerClusterGroup
+					chunkedLoading
+					iconCreateFunction={createClusterCustomIcon}
+				>
+					{markersData.map((station, index) => (
+						<Marker
+							key={`${station}-${index}`}
+							position={
+								[station.latitude, station.longitude] as LatLngExpression
+							}
+							icon={customIcon}
+						>
+							<Popup>
+								<div className='popup-content'>
+									<h3 className='popup-title'>
+										Network: {station.network} / Station: {station.station}
+									</h3>
+									<p>
+										Longitude: {station.longitude} Latitude: {station.latitude}
+									</p>
+								</div>
+							</Popup>
+						</Marker>
+					))}
+				</MarkerClusterGroup>
+			)}
 		</MapContainer>
 	);
 }

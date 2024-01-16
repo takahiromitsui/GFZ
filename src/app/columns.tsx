@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { StationDataType } from '@/api/station';
 
-
 export const columns: ColumnDef<StationDataType>[] = [
 	{
 		id: 'select',
@@ -146,11 +145,11 @@ export const columns: ColumnDef<StationDataType>[] = [
 				</Button>
 			);
 		},
-		// cell:({row}) => {
-		// 	const date = new Date(row.getValue('endTime'));
+		cell: ({ row }) => {
+			const date = new Date(row.getValue('endTime'));
 
-		// 	const formattedDate = date.toLocaleDateString();
-		// 	return <div className='font-medium'>{formattedDate}</div>
-		// }
+			const formattedDate = date.toLocaleDateString();
+			return <div className='font-medium'>{formattedDate}</div>;
+		},
 	},
 ];

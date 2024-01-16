@@ -6,7 +6,7 @@ export default function Home() {
 			<header className='w-full bg-blue-600 text-white p-10 font-bold'>
 				<h1 className='text-2xl'>Interactive Map</h1>
 			</header>
-			<main className='flex ml-40 max-w-screen-lg mt-10'>
+			<main className='flex mt-10 px-10'>
 				<NetworkStationContextProvider>
 					<div className='flex-none'>
 						<StationControl />

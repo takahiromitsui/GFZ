@@ -5,18 +5,8 @@ export default function Home() {
 		<main className='flex ml-40 max-w-screen-lg'>
 			<NetworkStationContextProvider>
 				<div className='flex-none'>
-					{/* Station Control Component */}
 					<StationControl />
 				</div>
-				{/* <div className='flex-1 flex flex-col ml-3'>
-					<div className='mb-4 flex-grow'>
-						<CustomMap />
-					</div>
-
-					<section>
-						<h1 className='text-3xl font-bold mb-4'> All stations</h1>
-					</section>
-				</div> */}
 			</NetworkStationContextProvider>
 		</main>
 	);

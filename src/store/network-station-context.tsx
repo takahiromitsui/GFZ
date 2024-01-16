@@ -75,7 +75,7 @@ export default function NetworkStationContextProvider(props: {
 					<CustomMap markersData={stations} />
 				</div>
 				{/* DataTable Component */}
-				<section>
+				<section style={{ height: '500px', overflowY: 'auto' }}>
 					<h1 className='text-3xl font-bold mb-4'>
 						Stations{' '}
 						{totalStations > 0 && (

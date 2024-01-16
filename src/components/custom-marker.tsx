@@ -14,14 +14,14 @@ type CustomMarkerProps = {
 export default function CustomMarker({ station }: CustomMarkerProps) {
   const { setSelectedStations, selectedStations } = useContext(NetworkStationContext);
 
-  const isSelected = selectedStations?.some(item => item.id === station.id) ?? false;
+  const isSelected = selectedStations?.some(item => item && item.id && item.id === station.id) ?? false;
 
   const position = [station.latitude, station.longitude] as LatLngExpression;
   
   const handleSelect = () => {
     setSelectedStations((prev: StationDataType[]) => {
       return isSelected
-        ? prev.filter((item) => item.id !== station.id)
+        ? prev.filter((item) => item && item.id && item.id !== station.id)
         : [...prev, station];
     });
   };

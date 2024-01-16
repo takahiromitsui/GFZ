@@ -28,7 +28,9 @@ const FormSchema = z.object({
 });
 
 export default function StationControl() {
-	const { networks, setCurrentNetwork } = useContext(NetworkStationContext);
+	const { networks, setCurrentNetwork, setSelectedStations } = useContext(
+		NetworkStationContext
+	);
 	const form = useForm<z.infer<typeof FormSchema>>({
 		resolver: zodResolver(FormSchema),
 	});
@@ -37,6 +39,9 @@ export default function StationControl() {
 		if (network) {
 			setCurrentNetwork(network);
 		}
+		setSelectedStations(prev => {
+			return [];
+		});
 	};
 	return (
 		<Form {...form}>

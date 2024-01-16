@@ -59,7 +59,15 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 					<p>
 						Longitude: {station.longitude} Latitude: {station.latitude}
 					</p>
-					<Button onClick={handleSelect} className='popup-button' type='button'>
+					<Button
+						onClick={handleSelect}
+						className={
+							isSelected
+								? 'bg-red-500 hover:bg-red-700'
+								: 'bg-blue-500 hover:bg-blue-700'
+						}
+						type='button'
+					>
 						{isSelected ? 'Unselect' : 'Select'}
 					</Button>
 				</div>

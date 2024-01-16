@@ -1,5 +1,12 @@
 'use client';
-import { useEffect, useState, createContext, ReactNode } from 'react';
+import {
+	useEffect,
+	useState,
+	createContext,
+	ReactNode,
+	Dispatch,
+	SetStateAction,
+} from 'react';
 import { NetworkDataType, getNetworks } from '@/api/network';
 import { StationDataType, getStations } from '@/api/station';
 import { DataTable } from '@/components/data-table';
@@ -15,7 +22,7 @@ type NetworkStationContextType = {
 	setCurrentNetwork: (network: NetworkDataType) => void;
 	stations: StationDataType[];
 	selectedStations: StationDataType[];
-	setSelectedStations: (stations: StationDataType[]) => void;
+	setSelectedStations: Dispatch<SetStateAction<StationDataType[]>>;
 };
 
 export const NetworkStationContext = createContext({

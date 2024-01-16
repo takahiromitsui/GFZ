@@ -1,4 +1,3 @@
-'use client';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { DivIcon, LatLngExpression } from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';

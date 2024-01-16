@@ -1,15 +1,18 @@
+'use client';
 import { Marker, Popup } from 'react-leaflet';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { StationDataType } from '@/api/station';
 import { Icon, LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { NetworkStationContext } from '@/store/network-station-context';
 
 type CustomMarkerProps = {
 	station: StationDataType;
 };
 
 export default function CustomMarker({ station }: CustomMarkerProps) {
+	const { setSelectedStations, selectedStations } = useContext(NetworkStationContext);
 	const [isSelected, setIsSelected] = useState(false);
 	const position = [station.latitude, station.longitude] as LatLngExpression;
 	const iconURL = isSelected
@@ -21,8 +24,18 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 		iconSize: [38, 38],
 	});
 	const handleSelect = () => {
+		if (!isSelected) {
+			setSelectedStations((prev: StationDataType[]) => {
+				return [...prev, station];
+			});
+		} else {
+			setSelectedStations((prev: StationDataType[]) =>
+				prev.filter((item: StationDataType) => item.id !== station.id)
+			);
+		}
 		setIsSelected(!isSelected);
 	};
+  console.log('CustomMarker', 'selectedStations', selectedStations);
 	return (
 		<Marker position={position} icon={customIcon}>
 			<Popup>

@@ -19,7 +19,7 @@ const CustomMap = dynamic(() => import('@/components/custom-map'), {
 
 type NetworkStationContextType = {
 	networks: NetworkDataType[];
-	setCurrentNetwork: (network: NetworkDataType) => void;
+	setCurrentNetwork: Dispatch<SetStateAction<NetworkDataType | null>>;
 	stations: StationDataType[];
 	selectedStations: StationDataType[];
 	setSelectedStations: Dispatch<SetStateAction<StationDataType[]>>;
@@ -53,7 +53,9 @@ export default function NetworkStationContextProvider(props: {
 	useEffect(() => {
 		if (currentNetwork) {
 			getStations(currentNetwork).then(stations => {
-				setStations(stations);
+				setStations((prev)=> {
+					return [ ...stations]
+				})
 			});
 		}
 	}, [currentNetwork]);

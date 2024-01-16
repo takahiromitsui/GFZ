@@ -28,7 +28,7 @@ const FormSchema = z.object({
 });
 
 export default function StationControl() {
-	const { networks, setCurrentNetwork, setSelectedStations } = useContext(
+	const { networks, setCurrentNetwork, setSelectedStations, setRowSelection } = useContext(
 		NetworkStationContext
 	);
 	const form = useForm<z.infer<typeof FormSchema>>({
@@ -41,6 +41,9 @@ export default function StationControl() {
 		}
 		setSelectedStations(prev => {
 			return [];
+		});
+		setRowSelection(prev => {
+			return {};
 		});
 	};
 	return (

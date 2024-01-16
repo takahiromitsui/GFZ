@@ -1,10 +1,11 @@
 'use client';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import { DivIcon, Icon, LatLngExpression, divIcon, point } from 'leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import { DivIcon, LatLngExpression } from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import 'leaflet/dist/leaflet.css';
 import { StationDataType } from '@/api/station';
+import CustomMarker from './custom-marker';
 
 type CustomMapProps = {
 	markersData?: StationDataType[];
@@ -12,11 +13,6 @@ type CustomMapProps = {
 
 export default function CustomMap({ markersData }: CustomMapProps) {
 	const position = [51.505, -0.09] as LatLngExpression;
-	const customIcon = new Icon({
-		// iconUrl: require('../assets/marker-icon.png'),
-		iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149060.png',
-		iconSize: [38, 38],
-	});
 	const createClusterCustomIcon = (cluster: any) => {
 		return new DivIcon({
 			html: `<div>${cluster.getChildCount()}</div>`,
@@ -45,24 +41,7 @@ export default function CustomMap({ markersData }: CustomMapProps) {
 					iconCreateFunction={createClusterCustomIcon}
 				>
 					{markersData.map((station, index) => (
-						<Marker
-							key={`${station}-${index}`}
-							position={
-								[station.latitude, station.longitude] as LatLngExpression
-							}
-							icon={customIcon}
-						>
-							<Popup>
-								<div className='popup-content'>
-									<h3 className='popup-title'>
-										Network: {station.network} / Station: {station.station}
-									</h3>
-									<p>
-										Longitude: {station.longitude} Latitude: {station.latitude}
-									</p>
-								</div>
-							</Popup>
-						</Marker>
+						<CustomMarker key={`${station.id}`} station={station} />
 					))}
 				</MarkerClusterGroup>
 			)}

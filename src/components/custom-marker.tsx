@@ -17,7 +17,7 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 	);
 	const [isSelected, setIsSelected] = useState(() => {
 		if (selectedStations) {
-			return selectedStations.some(item => item.id && item.id === station.id);
+			return selectedStations.some(item => item && item.id && item.id === station.id);
 		}
 		return false;
 	});

@@ -67,10 +67,15 @@ export function DataTable<TData, TValue>({
 	const previousRowSelectionRef = useRef(rowSelection);
 
 useEffect(() => {
-	let newRowSelection = {};
-  newRowSelection = selectedStations.reduce((acc: any, item) => {
-		if(typeof data !== 'undefined') return acc;
-		const stationData = data as StationDataType[];
+	const stationData = data as StationDataType[];
+	
+  const newRowSelection = selectedStations.reduce((acc: any, item) => {
+		if (!data || !item) {
+			return acc;
+		}
+		if (data.length === 0|| !item.id) {
+			return acc;
+		}
     const index = stationData.findIndex(station => station.id === item.id);
     acc[index] = true;
     return acc;
@@ -80,7 +85,7 @@ useEffect(() => {
   const hasRowSelectionChanged = !areObjectsEqual(newRowSelection, previousRowSelectionRef.current);
 
   if (hasRowSelectionChanged) {
-    setRowSelection(newRowSelection);
+    setRowSelection(prevRowSelection => ({ ...prevRowSelection, ...newRowSelection }));
   }
 
   // Update the ref with the current rowSelection for the next comparison

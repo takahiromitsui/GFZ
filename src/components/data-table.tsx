@@ -19,7 +19,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { NetworkStationContext } from '@/store/network-station-context';
 import { StationDataType } from '@/api/station';
 
@@ -47,7 +47,45 @@ export function DataTable<TData, TValue>({
 			rowSelection,
 		},
 	});
-	const { setSelectedStations } = useContext(NetworkStationContext);
+	const { selectedStations,setSelectedStations } = useContext(NetworkStationContext);
+	const areObjectsEqual = (objA:any, objB: any) => {
+		const keysA = Object.keys(objA);
+		const keysB = Object.keys(objB);
+	
+		if (keysA.length !== keysB.length) {
+			return false;
+		}
+	
+		for (const key of keysA) {
+			if (objA[key] !== objB[key]) {
+				return false;
+			}
+		}
+	
+		return true;
+	}
+	const previousRowSelectionRef = useRef(rowSelection);
+
+useEffect(() => {
+  const newRowSelection = selectedStations.reduce((acc: any, item) => {
+		const stationData = data as StationDataType[];
+    const index = stationData.findIndex((station) => station.id === item.id);
+    acc[index] = true;
+    return acc;
+  }, {});
+
+  // Check if newRowSelection is different from the previous rowSelection
+  const hasRowSelectionChanged = !areObjectsEqual(newRowSelection, previousRowSelectionRef.current);
+
+  if (hasRowSelectionChanged) {
+    setRowSelection(newRowSelection);
+  }
+
+  // Update the ref with the current rowSelection for the next comparison
+  previousRowSelectionRef.current = newRowSelection;
+}, [selectedStations, setRowSelection, data]);
+	
+
 	useEffect(() => {
 		const updateSelectedStationsFromRowSelection = () => {
 			const selectedStationsFromRowSelection = Object.keys(rowSelection)

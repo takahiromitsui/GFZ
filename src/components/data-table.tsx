@@ -67,9 +67,11 @@ export function DataTable<TData, TValue>({
 	const previousRowSelectionRef = useRef(rowSelection);
 
 useEffect(() => {
-  const newRowSelection = selectedStations.reduce((acc: any, item) => {
+	let newRowSelection = {};
+  newRowSelection = selectedStations.reduce((acc: any, item) => {
+		if(typeof data !== 'undefined') return acc;
 		const stationData = data as StationDataType[];
-    const index = stationData.findIndex((station) => station.id === item.id);
+    const index = stationData.findIndex(station => station.id === item.id);
     acc[index] = true;
     return acc;
   }, {});

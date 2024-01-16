@@ -35,14 +35,16 @@ export default function CustomMap({ markersData }: CustomMapProps) {
 				url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
 			/>
 			{markersData && (
-				<MarkerClusterGroup
-					chunkedLoading
-					iconCreateFunction={createClusterCustomIcon}
-				>
+				// <MarkerClusterGroup
+				// 	chunkedLoading
+				// 	iconCreateFunction={createClusterCustomIcon}
+				// >
+			<div>
 					{markersData.map((station, index) => (
 						<CustomMarker key={`${station.id}`} station={station} />
 					))}
-				</MarkerClusterGroup>
+				{/* </MarkerClusterGroup> */}
+			</div>
 			)}
 		</MapContainer>
 	);

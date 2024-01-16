@@ -12,12 +12,23 @@ type CustomMarkerProps = {
 };
 
 export default function CustomMarker({ station }: CustomMarkerProps) {
-	const { setSelectedStations, selectedStations } = useContext(NetworkStationContext);
-	const [isSelected, setIsSelected] = useState(selectedStations.some((item) => item.id === station.id));
-  useEffect(() => {
-    setIsSelected(selectedStations.some((item) => item.id === station.id));
-  }, [selectedStations, station.id]);
-  
+	const { setSelectedStations, selectedStations } = useContext(
+		NetworkStationContext
+	);
+	const [isSelected, setIsSelected] = useState(() => {
+		if (selectedStations) {
+			return selectedStations.some(item => item.id && item.id === station.id);
+		}
+		return false;
+	});
+
+	useEffect(() => {
+		setIsSelected(
+			Array.isArray(selectedStations) && 
+      selectedStations.some(item => item && item.id && item.id === station.id)
+		);
+	}, [selectedStations, station.id]);
+
 	const position = [station.latitude, station.longitude] as LatLngExpression;
 	const iconURL = isSelected
 		? 'https://cdn-icons-png.flaticon.com/512/2776/2776067.png'

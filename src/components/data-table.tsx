@@ -19,7 +19,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NetworkStationContext } from '@/store/network-station-context';
 import { StationDataType } from '@/api/station';
 
@@ -48,13 +48,19 @@ export function DataTable<TData, TValue>({
 		},
 	});
 	const { setSelectedStations } = useContext(NetworkStationContext);
-	const handleSelectStation = () => {
-		const data = table
-			.getFilteredSelectedRowModel()
-			.rows.map(row => row.original) as StationDataType[];
+	useEffect(() => {
+		const updateSelectedStationsFromRowSelection = () => {
+			const selectedStationsFromRowSelection = Object.keys(rowSelection)
+				.filter(index => rowSelection[index as keyof typeof rowSelection])
+				.map(index => data[Number(index)]);
 
-		setSelectedStations(data);
-	};
+			setSelectedStations(
+				selectedStationsFromRowSelection as StationDataType[]
+			);
+		};
+
+		updateSelectedStationsFromRowSelection();
+	}, [rowSelection, data, setSelectedStations]);
 
 	return (
 		<>
@@ -85,7 +91,6 @@ export function DataTable<TData, TValue>({
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && 'selected'}
-									onClick={handleSelectStation}
 								>
 									{row.getVisibleCells().map(cell => (
 										<TableCell key={cell.id}>

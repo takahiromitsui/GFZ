@@ -13,7 +13,7 @@ type CustomMarkerProps = {
 
 export default function CustomMarker({ station }: CustomMarkerProps) {
 	const { setSelectedStations, selectedStations } = useContext(NetworkStationContext);
-	const [isSelected, setIsSelected] = useState(false);
+	const [isSelected, setIsSelected] = useState(selectedStations.some((item) => item.id === station.id));
 	const position = [station.latitude, station.longitude] as LatLngExpression;
 	const iconURL = isSelected
 		? 'https://cdn-icons-png.flaticon.com/512/2776/2776067.png'
@@ -35,7 +35,7 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 		}
 		setIsSelected(!isSelected);
 	};
-  console.log('CustomMarker', 'selectedStations', selectedStations);
+
 	return (
 		<Marker position={position} icon={customIcon}>
 			<Popup>

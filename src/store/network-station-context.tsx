@@ -44,6 +44,7 @@ export default function NetworkStationContextProvider(props: {
 	const [selectedStations, setSelectedStations] = useState<StationDataType[]>(
 		[]
 	);
+	const totalStations = stations.length;
 
 	useEffect(() => {
 		getNetworks().then(networks => setNetworks(networks));
@@ -75,7 +76,12 @@ export default function NetworkStationContextProvider(props: {
 				</div>
 				{/* DataTable Component */}
 				<section>
-					<h1 className='text-3xl font-bold mb-4'> All stations</h1>
+					<h1 className='text-3xl font-bold mb-4'>
+						Stations{' '}
+						{totalStations > 0 && (
+							<span>({totalStations} {totalStations ===1? 'station': 'stations'})</span>
+						)}
+					</h1>
 					<DataTable columns={columns} data={stations} />
 				</section>
 			</div>

@@ -23,6 +23,8 @@ type NetworkStationContextType = {
 	stations: StationDataType[];
 	selectedStations: StationDataType[];
 	setSelectedStations: Dispatch<SetStateAction<StationDataType[]>>;
+	rowSelection: {},
+	setRowSelection: Dispatch<SetStateAction<{}>>;
 };
 
 export const NetworkStationContext = createContext({
@@ -31,6 +33,8 @@ export const NetworkStationContext = createContext({
 	stations: [],
 	selectedStations: [],
 	setSelectedStations: () => {},
+	rowSelection: {},
+	setRowSelection: () => {},
 } as NetworkStationContextType);
 
 export default function NetworkStationContextProvider(props: {
@@ -44,6 +48,7 @@ export default function NetworkStationContextProvider(props: {
 	const [selectedStations, setSelectedStations] = useState<StationDataType[]>(
 		[]
 	);
+	const [rowSelection, setRowSelection] = useState({});
 	const totalStations = stations.length;
 
 	useEffect(() => {
@@ -68,6 +73,8 @@ export default function NetworkStationContextProvider(props: {
 				stations,
 				selectedStations,
 				setSelectedStations,
+				rowSelection,
+				setRowSelection
 			}}
 		>
 			{props.children}

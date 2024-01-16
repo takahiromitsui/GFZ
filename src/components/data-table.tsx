@@ -33,7 +33,8 @@ export function DataTable<TData, TValue>({
 	data,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
-	const [rowSelection, setRowSelection] = useState({});
+	// const [rowSelection, setRowSelection] = useState({});
+	const { selectedStations,setSelectedStations, rowSelection, setRowSelection } = useContext(NetworkStationContext);
 	const table = useReactTable({
 		data,
 		columns,
@@ -47,7 +48,6 @@ export function DataTable<TData, TValue>({
 			rowSelection,
 		},
 	});
-	const { selectedStations,setSelectedStations } = useContext(NetworkStationContext);
 	const areObjectsEqual = (objA:any, objB: any) => {
 		const keysA = Object.keys(objA);
 		const keysB = Object.keys(objB);

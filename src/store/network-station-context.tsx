@@ -23,7 +23,7 @@ type NetworkStationContextType = {
 	stations: StationDataType[];
 	selectedStations: StationDataType[];
 	setSelectedStations: Dispatch<SetStateAction<StationDataType[]>>;
-	rowSelection: {},
+	rowSelection: {};
 	setRowSelection: Dispatch<SetStateAction<{}>>;
 };
 
@@ -58,9 +58,9 @@ export default function NetworkStationContextProvider(props: {
 	useEffect(() => {
 		if (currentNetwork) {
 			getStations(currentNetwork).then(stations => {
-				setStations((prev)=> {
-					return [ ...stations]
-				})
+				setStations(prev => {
+					return [...stations];
+				});
 			});
 		}
 	}, [currentNetwork]);
@@ -74,7 +74,7 @@ export default function NetworkStationContextProvider(props: {
 				selectedStations,
 				setSelectedStations,
 				rowSelection,
-				setRowSelection
+				setRowSelection,
 			}}
 		>
 			{props.children}
@@ -84,11 +84,13 @@ export default function NetworkStationContextProvider(props: {
 					<CustomMap markersData={stations} />
 				</div>
 				{/* DataTable Component */}
-				<section style={{ height: '400px', overflowY: 'auto' }}>
+				<section style={{ height: '400px', width: '70%', overflowY: 'auto', paddingBottom:'3rem' }}>
 					<h1 className='text-3xl font-bold mb-4'>
 						Stations{' '}
 						{totalStations > 0 && (
-							<span>({totalStations} {totalStations ===1? 'station': 'stations'})</span>
+							<span>
+								({totalStations} {totalStations === 1 ? 'station' : 'stations'})
+							</span>
 						)}
 					</h1>
 					<DataTable columns={columns} data={stations} />

@@ -27,7 +27,7 @@ export default function CustomMap({ markersData }: CustomMapProps) {
 			zoom={1}
 			style={{
 				height: '400px',
-				width: '100%',
+				width: '70%',
 				zIndex: 0,
 			}}
 		>

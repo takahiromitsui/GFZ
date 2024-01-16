@@ -24,7 +24,7 @@ export default function CustomMap({ markersData }: CustomMapProps) {
 	return (
 		<MapContainer
 			center={position}
-			zoom={0}
+			zoom={1}
 			style={{
 				height: '400px',
 				width: '100%',

@@ -33,8 +33,12 @@ export function DataTable<TData, TValue>({
 	data,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
-	// const [rowSelection, setRowSelection] = useState({});
-	const { selectedStations,setSelectedStations, rowSelection, setRowSelection } = useContext(NetworkStationContext);
+	const {
+		selectedStations,
+		setSelectedStations,
+		rowSelection,
+		setRowSelection,
+	} = useContext(NetworkStationContext);
 	const table = useReactTable({
 		data,
 		columns,
@@ -48,50 +52,55 @@ export function DataTable<TData, TValue>({
 			rowSelection,
 		},
 	});
-	const areObjectsEqual = (objA:any, objB: any) => {
+	const areObjectsEqual = (objA: any, objB: any) => {
 		const keysA = Object.keys(objA);
 		const keysB = Object.keys(objB);
-	
+
 		if (keysA.length !== keysB.length) {
 			return false;
 		}
-	
+
 		for (const key of keysA) {
 			if (objA[key] !== objB[key]) {
 				return false;
 			}
 		}
-	
+
 		return true;
-	}
+	};
 	const previousRowSelectionRef = useRef(rowSelection);
 
-useEffect(() => {
-	const stationData = data as StationDataType[];
-	
-  const newRowSelection = selectedStations.reduce((acc: any, item) => {
-		if (!data || !item) {
+	useEffect(() => {
+		const stationData = data as StationDataType[];
+
+		const newRowSelection = selectedStations.reduce((acc: any, item) => {
+			if (!data || !item) {
+				return acc;
+			}
+			if (data.length === 0 || !item.id) {
+				return acc;
+			}
+			const index = stationData.findIndex(station => station.id === item.id);
+			acc[index] = true;
 			return acc;
+		}, {});
+
+		// Check if newRowSelection is different from the previous rowSelection
+		const hasRowSelectionChanged = !areObjectsEqual(
+			newRowSelection,
+			previousRowSelectionRef.current
+		);
+
+		if (hasRowSelectionChanged) {
+			setRowSelection(prevRowSelection => ({
+				...prevRowSelection,
+				...newRowSelection,
+			}));
 		}
-		if (data.length === 0|| !item.id) {
-			return acc;
-		}
-    const index = stationData.findIndex(station => station.id === item.id);
-    acc[index] = true;
-    return acc;
-  }, {});
 
-  // Check if newRowSelection is different from the previous rowSelection
-  const hasRowSelectionChanged = !areObjectsEqual(newRowSelection, previousRowSelectionRef.current);
-
-  if (hasRowSelectionChanged) {
-    setRowSelection(prevRowSelection => ({ ...prevRowSelection, ...newRowSelection }));
-  }
-
-  // Update the ref with the current rowSelection for the next comparison
-  previousRowSelectionRef.current = newRowSelection;
-}, [selectedStations, setRowSelection, data]);
-	
+		// Update the ref with the current rowSelection for the next comparison
+		previousRowSelectionRef.current = newRowSelection;
+	}, [selectedStations, setRowSelection, data]);
 
 	useEffect(() => {
 		const updateSelectedStationsFromRowSelection = () => {

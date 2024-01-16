@@ -49,7 +49,6 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 		iconUrl: iconURL,
 		iconSize: [38, 38],
 	});
-	// console.log('customMarker', rowSelection)
 	return (
 		<Marker position={position} icon={customIcon}>
 			<Popup>

@@ -19,10 +19,10 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NetworkStationContext } from '@/store/network-station-context';
 import { StationDataType } from '@/api/station';
-import { areObjectsEqual } from '@/utils/object-utils';
+import { useSyncRowSelectionWithSelectedStations } from '@/hooks/useSyncRowSelectionWithSelectedStations';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -53,39 +53,12 @@ export function DataTable<TData, TValue>({
 			rowSelection,
 		},
 	});
-	const previousRowSelectionRef = useRef(rowSelection);
 
-	useEffect(() => {
-		const stationData = data as StationDataType[];
-
-		const newRowSelection = selectedStations.reduce((acc: any, item) => {
-			if (!data || !item) {
-				return acc;
-			}
-			if (data.length === 0 || !item.id) {
-				return acc;
-			}
-			const index = stationData.findIndex(station => station.id === item.id);
-			acc[index] = true;
-			return acc;
-		}, {});
-
-		// Check if newRowSelection is different from the previous rowSelection
-		const hasRowSelectionChanged = !areObjectsEqual(
-			newRowSelection,
-			previousRowSelectionRef.current
-		);
-
-		if (hasRowSelectionChanged) {
-			setRowSelection(prevRowSelection => ({
-				...prevRowSelection,
-				...newRowSelection,
-			}));
-		}
-
-		// Update the ref with the current rowSelection for the next comparison
-		previousRowSelectionRef.current = newRowSelection;
-	}, [selectedStations, setRowSelection, data]);
+	useSyncRowSelectionWithSelectedStations(
+		selectedStations,
+		setRowSelection,
+		data
+	);
 
 	useEffect(() => {
 		const updateSelectedStationsFromRowSelection = () => {

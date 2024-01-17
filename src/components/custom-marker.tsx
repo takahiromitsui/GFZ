@@ -16,8 +16,7 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 		useContext(NetworkStationContext);
 
 	const isSelected =
-		selectedStations?.some(item => item && item.id && item.id === station.id) ??
-		false;
+		selectedStations?.some(item => item?.id === station.id) ?? false;
 	const iconURL = isSelected
 		? '/assets/selected-marker-icon.png'
 		: '/assets/marker-icon.png';
@@ -39,7 +38,7 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 		}
 		setSelectedStations((prev: StationDataType[]) => {
 			return isSelected
-				? prev.filter(item => item && item.id && item.id !== station.id)
+				? prev.filter(item => item?.id !== station.id)
 				: [...prev, station];
 		});
 	};

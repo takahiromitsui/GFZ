@@ -13,14 +13,12 @@ export const useSyncRowSelectionWithSelectedStations = (
 		const stationData = data as StationDataType[];
 
 		const newRowSelection = selectedStations.reduce((acc: any, item) => {
-			if (!data || !item) {
-				return acc;
+			if (data?.length && item?.id) {
+				const index = stationData.findIndex(station => station.id === item.id);
+				if (index !== -1) {
+					acc[index] = true;
+				}
 			}
-			if (data.length === 0 || !item.id) {
-				return acc;
-			}
-			const index = stationData.findIndex(station => station.id === item.id);
-			acc[index] = true;
 			return acc;
 		}, {});
 

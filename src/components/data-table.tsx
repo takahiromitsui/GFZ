@@ -19,10 +19,10 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { NetworkStationContext } from '@/store/network-station-context';
-import { StationDataType } from '@/api/station';
 import { useSyncRowSelectionWithSelectedStations } from '@/hooks/useSyncRowSelectionWithSelectedStations';
+import { useUpdateSelectedStationsFromRowSelection } from '@/hooks/useUpdateSelectedStationsFromRowSelection';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -60,19 +60,11 @@ export function DataTable<TData, TValue>({
 		data
 	);
 
-	useEffect(() => {
-		const updateSelectedStationsFromRowSelection = () => {
-			const selectedStationsFromRowSelection = Object.keys(rowSelection)
-				.filter(index => rowSelection[index as keyof typeof rowSelection])
-				.map(index => data[Number(index)]);
-
-			setSelectedStations(
-				selectedStationsFromRowSelection as StationDataType[]
-			);
-		};
-
-		updateSelectedStationsFromRowSelection();
-	}, [rowSelection, data, setSelectedStations]);
+	useUpdateSelectedStationsFromRowSelection(
+		rowSelection,
+		data,
+		setSelectedStations
+	);
 
 	return (
 		<>

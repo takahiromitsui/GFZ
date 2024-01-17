@@ -52,7 +52,7 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 						Network: {station.network} / Station: {station.station}
 					</h3>
 					<p>
-						Longitude: {station.longitude} Latitude: {station.latitude}
+						Latitude: {station.latitude} Longitude: {station.longitude}
 					</p>
 					<Button
 						onClick={handleSelect}

@@ -12,17 +12,20 @@ type CustomMarkerProps = {
 };
 
 export default function CustomMarker({ station }: CustomMarkerProps) {
-	const {
-		setSelectedStations,
-		selectedStations,
-		rowSelection,
-		setRowSelection,
-		stations,
-	} = useContext(NetworkStationContext);
+	const { setSelectedStations, selectedStations, setRowSelection, stations } =
+		useContext(NetworkStationContext);
 
 	const isSelected =
 		selectedStations?.some(item => item && item.id && item.id === station.id) ??
 		false;
+	const iconURL = isSelected
+		? '/assets/selected-marker-icon.png'
+		: '/assets/marker-icon.png';
+
+	const customIcon = new Icon({
+		iconUrl: iconURL,
+		iconSize: [38, 38],
+	});
 
 	const position = [station.latitude, station.longitude] as LatLngExpression;
 
@@ -41,14 +44,6 @@ export default function CustomMarker({ station }: CustomMarkerProps) {
 		});
 	};
 
-	const iconURL = isSelected
-		? 'https://cdn-icons-png.flaticon.com/512/2776/2776067.png'
-		: 'https://cdn-icons-png.flaticon.com/512/149/149060.png';
-
-	const customIcon = new Icon({
-		iconUrl: iconURL,
-		iconSize: [38, 38],
-	});
 	return (
 		<Marker position={position} icon={customIcon}>
 			<Popup>

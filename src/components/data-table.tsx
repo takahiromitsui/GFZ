@@ -22,6 +22,7 @@ import {
 import { useContext, useEffect, useRef, useState } from 'react';
 import { NetworkStationContext } from '@/store/network-station-context';
 import { StationDataType } from '@/api/station';
+import { areObjectsEqual } from '@/utils/object-utils';
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -52,22 +53,6 @@ export function DataTable<TData, TValue>({
 			rowSelection,
 		},
 	});
-	const areObjectsEqual = (objA: any, objB: any) => {
-		const keysA = Object.keys(objA);
-		const keysB = Object.keys(objB);
-
-		if (keysA.length !== keysB.length) {
-			return false;
-		}
-
-		for (const key of keysA) {
-			if (objA[key] !== objB[key]) {
-				return false;
-			}
-		}
-
-		return true;
-	};
 	const previousRowSelectionRef = useRef(rowSelection);
 
 	useEffect(() => {
